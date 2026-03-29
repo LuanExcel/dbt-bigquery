@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: requirements-txt-fixer
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.3.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 3.0.7 # <-- Atualizado para suportar dbt 1.8+
+    hooks:
+      - id: sqlfluff-lint
+        additional_dependencies:
+          - sqlfluff-templater-dbt==3.0.7 # <-- Deve ser EXATAMENTE igual ao rev
+          - dbt-core==1.8.2 # <-- Recomendado: trave na versão exata que você usa localmente
+          - dbt-bigquery==1.8.2 # <-- Trave na mesma versão do dbt-core
+      - id: sqlfluff-fix
+        additional_dependencies:
+          - sqlfluff-templater-dbt==3.0.7
+          - dbt-core==1.8.2
+          - dbt-bigquery==1.8.2
